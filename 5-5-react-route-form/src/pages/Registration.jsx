@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 export default function Registration() {
-  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
@@ -13,18 +12,18 @@ export default function Registration() {
 
     const nextErrors = {};
 
-    if (!fullName.trim()) nextErrors.fullName = "Full name is required";
-
+    // Email validation
     if (!email.trim()) nextErrors.email = "Email is required";
     else if (!(email.includes("@") && email.endsWith(".com")))
       nextErrors.email = "Enter a valid email address";
 
+    // Password validation
     if (!password.trim()) nextErrors.password = "Password is required";
 
+    // Gender validation
     if (!gender) nextErrors.gender = "Please select your gender";
 
     setErrors(nextErrors);
-
     if (Object.keys(nextErrors).length > 0) return;
 
     alert(`User Registered: ${email}`);
@@ -38,17 +37,7 @@ export default function Registration() {
       </p>
 
       <form onSubmit={handleSubmit} className="card form neon">
-        <div className="form-row">
-          <label htmlFor="fullName">Full Name</label>
-          <input
-            id="fullName"
-            type="text"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
-          {errors.fullName && <p className="error">{errors.fullName}</p>}
-        </div>
-
+        {/* Email */}
         <div className="form-row">
           <label htmlFor="email">Email</label>
           <input
@@ -61,6 +50,7 @@ export default function Registration() {
           {errors.email && <p className="error">{errors.email}</p>}
         </div>
 
+        {/* Password */}
         <div className="form-row">
           <label htmlFor="password">Password</label>
           <input
@@ -72,6 +62,7 @@ export default function Registration() {
           {errors.password && <p className="error">{errors.password}</p>}
         </div>
 
+        {/* Gender */}
         <fieldset className="form-row">
           <legend>Gender</legend>
 
@@ -100,7 +91,6 @@ export default function Registration() {
           {errors.gender && <p className="error">{errors.gender}</p>}
         </fieldset>
 
-        {/* Button is now clickable so errors will show */}
         <button type="submit" className="btn">
           Register
         </button>
