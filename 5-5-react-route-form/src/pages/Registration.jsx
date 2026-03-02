@@ -3,17 +3,10 @@ import { useState } from "react";
 export default function Registration() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
 
   const [errors, setErrors] = useState({});
-
-  const isComplete =
-    fullName.trim() !== "" &&
-    email.trim() !== "" &&
-    password.trim() !== "" &&
-    gender.trim() !== "";
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -31,6 +24,7 @@ export default function Registration() {
     if (!gender) nextErrors.gender = "Please select your gender";
 
     setErrors(nextErrors);
+
     if (Object.keys(nextErrors).length > 0) return;
 
     alert(`User Registered: ${email}`);
@@ -59,18 +53,12 @@ export default function Registration() {
           <label htmlFor="email">Email</label>
           <input
             id="email"
-            placeholder="you@example.com"
             type="email"
+            placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            aria-invalid={Boolean(errors.email)}
-            aria-describedby={errors.email ? "email-error" : undefined}
           />
-          {errors.email && (
-            <p id="email-error" className="error">
-              {errors.email}
-            </p>
-          )}
+          {errors.email && <p className="error">{errors.email}</p>}
         </div>
 
         <div className="form-row">
@@ -112,7 +100,8 @@ export default function Registration() {
           {errors.gender && <p className="error">{errors.gender}</p>}
         </fieldset>
 
-        <button type="submit" className="btn" disabled={!isComplete}>
+        {/* Button is now clickable so errors will show */}
+        <button type="submit" className="btn">
           Register
         </button>
       </form>
