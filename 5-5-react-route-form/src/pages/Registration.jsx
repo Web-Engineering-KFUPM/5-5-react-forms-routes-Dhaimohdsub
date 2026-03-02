@@ -4,30 +4,37 @@ export default function Registration() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
-
   const [errors, setErrors] = useState({});
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const nextErrors = {};
 
-    // Email validation
-    if (!email.trim()) nextErrors.email = "Email is required";
-    else if (!(email.includes("@") && email.endsWith(".com")))
+    // Email validation (extra custom check)
+    if (!email.trim()) {
+      nextErrors.email = "Email is required";
+    } else if (!(email.includes("@") && email.endsWith(".com"))) {
       nextErrors.email = "Enter a valid email address";
+    }
 
     // Password validation
-    if (!password.trim()) nextErrors.password = "Password is required";
+    if (!password.trim()) {
+      nextErrors.password = "Password is required";
+    }
 
     // Gender validation
-    if (!gender) nextErrors.gender = "Please select your gender";
+    if (!gender) {
+      nextErrors.gender = "Please select your gender";
+    }
 
     setErrors(nextErrors);
+
     if (Object.keys(nextErrors).length > 0) return;
 
-    alert(`User Registered: ${email}`);
-  }
+    // ✅ FIXED alert syntax (template string)
+    alert(`Registration submit: ${email}`);
+  };
 
   return (
     <section>
@@ -42,8 +49,9 @@ export default function Registration() {
           <label htmlFor="email">Email</label>
           <input
             id="email"
-            type="email"
             placeholder="you@example.com"
+            type="email"
+            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -56,6 +64,7 @@ export default function Registration() {
           <input
             id="password"
             type="password"
+            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -71,6 +80,7 @@ export default function Registration() {
               type="radio"
               name="gender"
               value="male"
+              required
               checked={gender === "male"}
               onChange={(e) => setGender(e.target.value)}
             />
@@ -82,6 +92,7 @@ export default function Registration() {
               type="radio"
               name="gender"
               value="female"
+              required
               checked={gender === "female"}
               onChange={(e) => setGender(e.target.value)}
             />
